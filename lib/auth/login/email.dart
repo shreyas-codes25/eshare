@@ -1,4 +1,4 @@
-import 'package:eshare/auth/login/auth_btn.dart';
+import 'package:eshare/widgets/auth_btn.dart';
 import 'package:eshare/auth/services/forwarding.dart';
 import 'package:eshare/widgets/t_and_c.dart';
 import 'package:eshare/widgets/textfield.dart';
@@ -26,12 +26,11 @@ class _EmailState extends State<Email> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.1,
-                  vertical: MediaQuery.of(context).size.height * 0.1),
-              child: Image.asset("assets/images/login.png"),
-            ),
+            Center(
+                child: Image.asset(
+              "assets/images/login.png",
+              height: 300,
+            )),
             Padding(
               padding: const EdgeInsets.all(14.0),
               child: Column(

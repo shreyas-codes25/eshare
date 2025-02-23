@@ -1,4 +1,4 @@
-import 'package:eshare/auth/login/auth_btn.dart';
+import 'package:eshare/widgets/auth_btn.dart';
 import 'package:eshare/auth/services/authenticate.dart';
 import 'package:eshare/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +28,11 @@ class _PasswordState extends State<Password> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.1,
-                  vertical: MediaQuery.of(context).size.height * 0.1),
-              child: Image.asset("assets/images/login.png"),
+            Center(
+              child: Image.asset(
+                "assets/images/password.png",
+                height: 300,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(14.0),

@@ -1,4 +1,5 @@
 import 'package:eshare/auth/login/email.dart';
+import 'package:eshare/widgets/auth_btn.dart';
 import 'package:flutter/material.dart';
 
 class StartPage extends StatelessWidget {
@@ -13,7 +14,7 @@ class StartPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset("assets/images/login.png", height: 250),
+            Image.asset("assets/images/memory.png", height: 300),
             const SizedBox(height: 20),
             const Text(
               "Welcome to e-Share",
@@ -30,22 +31,8 @@ class StartPage extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  backgroundColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Text(
-                  "Getting Started",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
-              ),
-            ),
+                width: double.infinity,
+                child: authButton("Getting Started", () {}, context)),
             const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

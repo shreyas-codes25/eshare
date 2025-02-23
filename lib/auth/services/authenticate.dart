@@ -29,11 +29,13 @@ Future<Map<String, dynamic>> authenticate(
 Future<void> authCheck(
     Map<String, dynamic> response, BuildContext context) async {
   if (response.containsKey("error")) {
-    SnackBar snackBar = SnackBar(
-      content: Text(response["error"]),
-      duration: Duration(seconds: 1),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    Fluttertoast.showToast(
+        msg: response['error'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Theme.of(context).primaryColor,
+        textColor: Colors.white,
+        fontSize: 16.0);
   } else if (response['success'] == true) {
     PrefsHelper.saveToPrefs("token", response["token"]);
     PrefsHelper.saveToPrefs("username", response["username"]);
