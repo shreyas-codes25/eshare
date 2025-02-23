@@ -1,4 +1,5 @@
-import 'package:eshare/auth/login.dart';
+import 'package:eshare/screens/startpage/start_page.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 255, 255, 255)),
         useMaterial3: true,
       ),
-      home: const Login(),
+      home: const StartPage(),
       debugShowCheckedModeBanner: false,
     );
   }
