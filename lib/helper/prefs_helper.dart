@@ -1,3 +1,5 @@
+import 'package:eshare/screens/startpage/start_page.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefsHelper {
@@ -33,8 +35,10 @@ class PrefsHelper {
     return prefs.containsKey(key);
   }
 
-  Future<void> clearSharedPreferences() async {
+  Future<void> clearSharedPreferences(BuildContext context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => StartPage()), (route) => false);
   }
 }
