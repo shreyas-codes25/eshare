@@ -81,10 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       trailing: IconButton(
                         icon: Icon(Icons.more_vert),
                         onPressed: () {},
-                      ), // 3-dot menu for options
+                      ),
                       onTap: () {
                         if (snapshot.data![index].name.endsWith("/")) {
-                          print(snapshot.data![index].name);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
