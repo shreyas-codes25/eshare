@@ -2,8 +2,11 @@ import 'package:eshare/helper/prefs_helper.dart';
 import 'package:eshare/models/drive_data_model.dart';
 import 'package:eshare/providers/api_endpoints.dart';
 import 'package:eshare/providers/api_provider.dart';
+import 'package:eshare/screens/startpage/start_page.dart';
+import 'package:flutter/material.dart';
 
-Future<List<DriveData>> getDriveData(String? path, String? nextToken) async {
+Future<List<DriveData>> getDriveData(
+    String? path, String? nextToken, BuildContext context) async {
   var token = await PrefsHelper().getPreference("token");
 
   Map<String, String?> body = {
@@ -24,6 +27,8 @@ Future<List<DriveData>> getDriveData(String? path, String? nextToken) async {
   if (response is List) {
     return response.map((json) => DriveData.fromJson(json)).toList();
   } else {
-    throw Exception("Invalid response format: Expected a List");
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => StartPage()), (route) => false);
+    return [];
   }
 }
