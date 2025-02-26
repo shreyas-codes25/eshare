@@ -1,6 +1,8 @@
 import 'package:eshare/models/drive_data_model.dart';
 import 'package:eshare/screens/folder_screen/list_tile.dart';
+import 'package:eshare/services/folder_services.dart';
 import 'package:eshare/services/get_drive.dart';
+import 'package:eshare/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
 
@@ -25,52 +27,91 @@ class _FoldersState extends State<Folders> {
       breadCrumbs = widget.breadCrumbs ?? ["My Drive"];
     } else {
       response = getDriveData("", "", context);
-      breadCrumbs.add("My Drive");
+      breadCrumbs.add("Drive");
     }
     super.initState();
   }
 
-  void _updateFolder(String folderName) {
-    setState(() {
-      breadCrumbs.add(folderName);
-      String folderPath =
-          breadCrumbs.length > 1 ? breadCrumbs.sublist(1).join("/") : "";
-      response = getDriveData(folderPath, null, context);
+  void _handleUpdateFolder(String folderName) {
+    updateFolder(folderName, breadCrumbs, context).then((data) {
+      setState(() {
+        response = Future.value(data);
+      });
+    });
+  }
+
+  void _handleRefreshFolder() {
+    refreshCurrentFolder(breadCrumbs, context).then((data) {
+      setState(() {
+        response = Future.value(data);
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: appBar("My Folders", context),
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BreadCrumb.builder(
-              divider: Icon(Icons.chevron_right),
-              itemCount: breadCrumbs.length,
-              builder: (index) {
-                return BreadCrumbItem(
-                  content: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      breadCrumbs[index],
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent,
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withAlpha(1),
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: BreadCrumb.builder(
+                        divider: Icon(Icons.chevron_right),
+                        itemCount: breadCrumbs.length,
+                        builder: (index) {
+                          return BreadCrumbItem(
+                            content: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                breadCrumbs[index],
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blueAccent,
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                breadCrumbs = breadCrumbs.sublist(0, index + 1);
+                                String folderPath = breadCrumbs.length > 1
+                                    ? breadCrumbs.sublist(1).join("/")
+                                    : "";
+                                response =
+                                    getDriveData(folderPath, null, context);
+                              });
+                            },
+                          );
+                        },
                       ),
                     ),
                   ),
-                  onTap: () {
-                    setState(() {
-                      response = getDriveData("", "", context);
-                      breadCrumbs = breadCrumbs.sublist(0, index + 1);
-                    });
-                  },
-                );
-              },
+                  IconButton(
+                    icon: Icon(Icons.refresh, color: Colors.blueAccent),
+                    onPressed: _handleRefreshFolder,
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: FutureBuilder<List<DriveData>>(
@@ -92,7 +133,7 @@ class _FoldersState extends State<Folders> {
                           modifiedDate: snapshot.data![index].modifiedDate,
                           size: snapshot.data![index].size,
                           breadCrumbs: breadCrumbs,
-                          onFolderTap: _updateFolder,
+                          onFolderTap: _handleUpdateFolder,
                         );
                       },
                     );

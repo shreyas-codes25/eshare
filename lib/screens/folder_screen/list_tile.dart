@@ -63,7 +63,6 @@ class _ListTileWidgetState extends State<ListTileWidget> {
               ),
         onTap: () async {
           if (widget.name!.endsWith("/")) {
-
             widget.onFolderTap
                 ?.call(widget.name!.replaceAll("/", "")); // Call callback
           } else {
