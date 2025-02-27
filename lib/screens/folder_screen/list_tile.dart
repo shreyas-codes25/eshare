@@ -1,3 +1,4 @@
+import 'package:eshare/screens/folder_screen/file_details.dart';
 import 'package:eshare/services/format.dart';
 
 import 'package:eshare/services/open_file.dart';
@@ -59,7 +60,22 @@ class _ListTileWidgetState extends State<ListTileWidget> {
               )
             : IconButton(
                 icon: Icon(Icons.more_vert),
-                onPressed: () {},
+                onPressed: () {
+                  // Show a bottom sheet
+                  showModalBottomSheet(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    context: context,
+                    useSafeArea: true,
+                    builder: (context) {
+                      return FileDetails();
+                    },
+                  );
+                },
               ),
         onTap: () async {
           if (widget.name!.endsWith("/")) {

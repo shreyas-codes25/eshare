@@ -59,13 +59,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: Icon(Icons.person, color: Colors.white, size: 30),
                     ),
                     const SizedBox(width: 16),
-                    Row(
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          _username,
+                        const Text(
+                          "Account",
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18,
+                          ),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              _username,
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -87,23 +100,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           // Features Section
           ListTile(
-            title: const Text("Camera Uploads"),
+            title: const Text("Backup & Sync"),
             trailing: Switch(value: false, onChanged: (val) {}),
           ),
           ListTile(
-            title: const Text("Configure Passcode"),
+            title: const Text("Turn on Notifications"),
             trailing: Switch(value: false, onChanged: (val) {}),
           ),
-          ListTile(
-            title: const Text("Connect a Computer"),
-            onTap: () {},
-          ),
+
           const Divider(),
 
           // Offline Settings
           ListTile(
             title: const Text("Offline Files"),
-            subtitle: const Text("Currently using 0 Bytes"),
           ),
           ListTile(
             title: const Text("Use data for offline files"),
@@ -120,8 +129,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           // Other Settings
           ListTile(
-            title: const Text("Dark Mode"),
-            subtitle: const Text("Follow System"),
+            title: const Text("Change Theme"),
+            subtitle: const Text("Light Mode"),
           ),
         ],
       ),
