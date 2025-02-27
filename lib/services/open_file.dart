@@ -11,19 +11,14 @@ void openFile(String? url) async {
   }
 
   try {
-    // Extract the file name from the URL
     String fileName = p.basename(Uri.parse(url).path);
 
-    // Get device's downloads directory
     Directory tempDir = await getTemporaryDirectory();
-    String filePath =
-        "${tempDir.path}/$fileName"; // Save with the correct file name
+    String filePath = "${tempDir.path}/$fileName";
 
-    // Download file using Dio
     Dio dio = Dio();
     await dio.download(url, filePath);
 
-    // Open file in default app based on file type
     OpenFilex.open(filePath);
   } catch (e) {
     print("Error downloading or opening file: $e");

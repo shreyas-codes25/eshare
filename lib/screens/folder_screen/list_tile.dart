@@ -1,7 +1,7 @@
-import 'package:eshare/screens/folder_screen/file_details.dart';
 import 'package:eshare/services/format.dart';
 
 import 'package:eshare/services/open_file.dart';
+import 'package:eshare/widgets/share_dialog.dart';
 import 'package:flutter/material.dart';
 
 class ListTileWidget extends StatefulWidget {
@@ -62,19 +62,14 @@ class _ListTileWidgetState extends State<ListTileWidget> {
                 icon: Icon(Icons.more_vert),
                 onPressed: () {
                   // Show a bottom sheet
-                  showModalBottomSheet(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                    ),
-                    context: context,
-                    useSafeArea: true,
-                    builder: (context) {
-                      return FileDetails();
-                    },
-                  );
+                  widget.name!.endsWith("/")
+                      ? () {}
+                      : showShareDialog(
+                          context,
+                          widget.url!,
+                          widget.name!,
+                          formatSize(widget.size!),
+                          formatDate(widget.modifiedDate!));
                 },
               ),
         onTap: () async {

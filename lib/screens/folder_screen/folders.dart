@@ -19,6 +19,7 @@ class Folders extends StatefulWidget {
 class _FoldersState extends State<Folders> {
   late Future<List<DriveData>> response;
   late List<String> breadCrumbs = [];
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -33,9 +34,18 @@ class _FoldersState extends State<Folders> {
   }
 
   void _handleUpdateFolder(String folderName) {
+    setState(() {
+      isLoading = true; // Show loader
+    });
+
     updateFolder(folderName, breadCrumbs, context).then((data) {
       setState(() {
         response = Future.value(data);
+        isLoading = false; // Hide loader after data loads
+      });
+    }).catchError((error) {
+      setState(() {
+        isLoading = false; // Hide loader even if there's an error
       });
     });
   }
@@ -114,33 +124,41 @@ class _FoldersState extends State<Folders> {
               ),
             ),
             Expanded(
-              child: FutureBuilder<List<DriveData>>(
-                future: response,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Center(child: Text('No data found'));
-                  } else {
-                    return ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        return ListTileWidget(
-                          name: snapshot.data![index].name,
-                          url: snapshot.data![index].url,
-                          modifiedDate: snapshot.data![index].modifiedDate,
-                          size: snapshot.data![index].size,
-                          breadCrumbs: breadCrumbs,
-                          onFolderTap: _handleUpdateFolder,
-                        );
+              child: isLoading
+                  ? Center(
+                      child:
+                          CircularProgressIndicator()) // Show loader when fetching
+                  : FutureBuilder<List<DriveData>>(
+                      future: response,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else if (!snapshot.hasData ||
+                            snapshot.data!.isEmpty) {
+                          return Center(child: Text('No data found'));
+                        } else {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return ListTileWidget(
+                                name: snapshot.data![index].name,
+                                url: snapshot.data![index].url,
+                                modifiedDate:
+                                    snapshot.data![index].modifiedDate,
+                                size: snapshot.data![index].size,
+                                breadCrumbs: breadCrumbs,
+                                onFolderTap: _handleUpdateFolder,
+                              );
+                            },
+                          );
+                        }
                       },
-                    );
-                  }
-                },
-              ),
-            ),
+                    ),
+            )
           ],
         ),
       ),
