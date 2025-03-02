@@ -1,0 +1,2 @@
+E:/ANIWORKS/eshare/android/app/.cxx/Debug/1t133nd6/armeabi-v7a/CMakeFiles/edit_cache.dir
+E:/ANIWORKS/eshare/android/app/.cxx/Debug/1t133nd6/armeabi-v7a/CMakeFiles/rebuild_cache.dir

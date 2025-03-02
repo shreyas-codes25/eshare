@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:open_filex/open_filex.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path/path.dart' as p;
 
 void openFile(String? url) async {
@@ -19,7 +19,7 @@ void openFile(String? url) async {
     Dio dio = Dio();
     await dio.download(url, filePath);
 
-    OpenFilex.open(filePath);
+    OpenFile.open(filePath);
   } catch (e) {
     print("Error downloading or opening file: $e");
   }

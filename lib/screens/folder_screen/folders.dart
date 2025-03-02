@@ -147,6 +147,7 @@ class _FoldersState extends State<Folders> {
                               return ListTileWidget(
                                 name: snapshot.data![index].name,
                                 url: snapshot.data![index].url,
+                                shortUrl: snapshot.data![index].shortUrl,
                                 modifiedDate:
                                     snapshot.data![index].modifiedDate,
                                 size: snapshot.data![index].size,

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class ListTileWidget extends StatefulWidget {
   final String? name;
   final String? url;
+  final String? shortUrl;
   final String? modifiedDate;
   final int? size;
   final List<String> breadCrumbs;
@@ -16,6 +17,7 @@ class ListTileWidget extends StatefulWidget {
       {super.key,
       required this.name,
       required this.url,
+      required this.shortUrl,
       required this.modifiedDate,
       required this.size,
       required this.breadCrumbs,
@@ -62,14 +64,13 @@ class _ListTileWidgetState extends State<ListTileWidget> {
                 icon: Icon(Icons.more_vert),
                 onPressed: () {
                   // Show a bottom sheet
-                  widget.name!.endsWith("/")
-                      ? () {}
-                      : showShareDialog(
-                          context,
-                          widget.url!,
-                          widget.name!,
-                          formatSize(widget.size!),
-                          formatDate(widget.modifiedDate!));
+                  showShareDialog(
+                      context,
+                      widget.url!,
+                      widget.shortUrl!,
+                      widget.name!,
+                      formatSize(widget.size!),
+                      formatDate(widget.modifiedDate!));
                 },
               ),
         onTap: () async {

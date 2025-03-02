@@ -1,3 +1,6 @@
+import 'package:eshare/screens/manage_access/manage_access_screen.dart';
+import 'package:eshare/services/download_file.dart';
+
 import 'package:eshare/services/share.dart';
 import 'package:eshare/services/copy_link.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +10,13 @@ class FileDetails extends StatefulWidget {
   const FileDetails(
       {super.key,
       required this.url,
+      required this.shortUrl,
       required this.name,
       required this.size,
       required this.modifiedDate});
 
   final String url;
+  final String shortUrl;
   final String name;
   final String size;
   final String modifiedDate;
@@ -36,7 +41,7 @@ class _FileDetailsState extends State<FileDetails> {
     );
 
     try {
-      await share(widget.url, widget.name); // Simulate file sharing
+      await share(widget.shortUrl, widget.name);
 
       Fluttertoast.showToast(
         msg: "File shared successfully!",
@@ -120,42 +125,30 @@ class _FileDetailsState extends State<FileDetails> {
                             leading: Icon(Icons.settings),
                             title: Text("Manage Access"),
                             onTap: () {
-                              // Manage access
-                            },
-                          ),
-                          Divider(),
-                          ListTile(
-                            leading: Icon(Icons.cloud_download),
-                            title: Text("Make available offline"),
-                            trailing: Switch(
-                              value: offline,
-                              onChanged: (value) {
-                                setState(() {
-                                  offline = value;
-                                });
-                              },
-                            ),
-                          ),
-                          Divider(),
-                          ListTile(
-                            leading: Icon(Icons.star_border_outlined),
-                            title: Text("star"),
-                            onTap: () {
-                              // Manage access
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ManageAccessScreen(
+                                            name: widget.name,
+                                            size: widget.size,
+                                            modifiedDate: widget.modifiedDate,
+                                            shortUrl: widget.shortUrl,
+                                            url: widget.url,
+                                          )));
                             },
                           ),
                           ListTile(
                             leading: Icon(Icons.copy),
                             title: Text("Copy Link"),
                             onTap: () {
-                              copyLink(widget.url, context);
+                              copyLink(widget.shortUrl, context);
                             },
                           ),
                           ListTile(
                             leading: Icon(Icons.download),
-                            title: Text("Save to device"),
-                            onTap: () {
-                              // Manage access
+                            title: Text("Download"),
+                            onTap: () async {
+                              await downloadFile(widget.url, widget.name);
                             },
                           ),
                           ListTile(
@@ -168,13 +161,6 @@ class _FileDetailsState extends State<FileDetails> {
                           ListTile(
                             leading: Icon(Icons.edit),
                             title: Text("remane"),
-                            onTap: () {
-                              // Manage access
-                            },
-                          ),
-                          ListTile(
-                            leading: Icon(Icons.print),
-                            title: Text("print"),
                             onTap: () {
                               // Manage access
                             },
