@@ -1,6 +1,6 @@
-import 'package:eshare/services/format.dart';
+import 'package:eshare/services/folder_services/format.dart';
 
-import 'package:eshare/services/open_file.dart';
+import 'package:eshare/services/folder_services/open_file.dart';
 import 'package:eshare/widgets/share_dialog.dart';
 import 'package:flutter/material.dart';
 

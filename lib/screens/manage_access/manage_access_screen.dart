@@ -1,3 +1,5 @@
+import 'package:eshare/screens/manage_access/expire_picker.dart';
+import 'package:eshare/services/copy_link.dart';
 import 'package:flutter/material.dart';
 
 class ManageAccessScreen extends StatefulWidget {
@@ -46,7 +48,9 @@ class _ManageAccessScreenState extends State<ManageAccessScreen> {
                 children: [
                   Text("People with this link can view"),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      copyLink(widget.shortUrl, context);
+                    },
                     child:
                         Text("Copy link", style: TextStyle(color: Colors.blue)),
                   ),
@@ -79,6 +83,9 @@ class _ManageAccessScreenState extends State<ManageAccessScreen> {
                   });
                 },
               ),
+              ExpirationPicker(
+                expirationEnabled: expirationEnabled,
+              ),
               SwitchListTile(
                 title: Text("Require password"),
                 subtitle: Text("Set a password to limit access"),
@@ -100,15 +107,6 @@ class _ManageAccessScreenState extends State<ManageAccessScreen> {
                 },
               ),
               const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                  onPressed: () {},
-                  child: Text("Delete link",
-                      style: TextStyle(color: Colors.white)),
-                ),
-              ),
             ],
           ),
         ),

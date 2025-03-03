@@ -1,7 +1,7 @@
 import 'package:eshare/screens/manage_access/manage_access_screen.dart';
 import 'package:eshare/services/download_file.dart';
 
-import 'package:eshare/services/share.dart';
+import 'package:eshare/services/folder_services/share.dart';
 import 'package:eshare/services/copy_link.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

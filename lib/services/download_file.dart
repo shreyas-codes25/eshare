@@ -13,6 +13,7 @@ Future<String?> downloadFile(String fileUrl, String fileName) async {
       // Get the downloads directory
       Directory? downloadsDirectory;
       if (Platform.isAndroid) {
+        Fluttertoast.showToast(msg: "Downloading File...");
         downloadsDirectory = Directory(
             '/storage/emulated/0/Download'); // Public Downloads folder
       } else {
